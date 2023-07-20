@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  lint-client:
     runs-on: ubuntu-latest
 
     steps:
