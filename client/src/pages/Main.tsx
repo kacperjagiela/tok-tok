@@ -1,11 +1,23 @@
 import { Flex } from "@chakra-ui/layout";
+import { Box } from "@chakra-ui/react";
 
+import { Feed, FeedType } from "../components/Feed";
+import { SideBar } from "../components/SideBar/SideBar";
 import { TopBar } from "../components/TopBar/TopBar";
 
-export const Main = () => {
+interface Props {
+  feedType?: FeedType;
+}
+
+export const Main = ({ feedType }: Props) => {
   return (
-    <Flex>
+    <Box h="100vh">
       <TopBar />
-    </Flex>
+      <Flex minH="100vh" pt={4} justifyContent="space-between">
+        <SideBar />
+        <Feed feedType={feedType ?? FeedType.Home} />
+        <Box>Feed type: {feedType}</Box>
+      </Flex>
+    </Box>
   );
 };

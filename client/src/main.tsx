@@ -9,7 +9,8 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter } from "react-router-dom";
 
 import { App } from "./App";
-import { Main } from "./pages/Main";
+import { FeedType } from "./components/Feed";
+import { Main } from "./pages";
 
 const config: ThemeConfig = {
   initialColorMode: "light",
@@ -30,7 +31,11 @@ const theme = extendTheme({
   config,
 });
 
-const router = createBrowserRouter([{ path: "/", element: <Main /> }]);
+const router = createBrowserRouter([
+  { path: "/", element: <Main /> },
+  { path: "/following", element: <Main feedType={FeedType.Following} /> },
+  { path: "/mentions", element: <Main feedType={FeedType.Mentions} /> },
+]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <>

@@ -7,7 +7,13 @@ interface Props {
 
 export const App = ({ router }: Props) => {
   return (
-    <Container minW="100vw" minH="100vh" px={0}>
+    <Container
+      minW="100vw"
+      minH="100vh"
+      bg="background"
+      overflowX="hidden"
+      px={0}
+    >
       <RouterProvider router={router} />
     </Container>
   );

@@ -7,12 +7,15 @@ import { SearchBar } from "./SearchBar";
 export const TopBar = () => {
   return (
     <Box
+      position="sticky"
+      top={0}
       w="100%"
       py={2}
       pl={4}
       pr={6}
       borderBottom="1px"
       borderColor="gray.300"
+      backgroundColor="background"
     >
       <Flex direction="row" justifyContent="space-between">
         <Box minW="300px">Logo</Box>
