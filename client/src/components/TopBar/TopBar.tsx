@@ -1,6 +1,7 @@
 import { Box } from "@chakra-ui/layout";
-import { Button, Flex, Stack } from "@chakra-ui/react";
+import { Button, Flex, Image, Stack } from "@chakra-ui/react";
 
+import reactImg from "../../assets/react.svg";
 import { HamburguerMenu } from "./HamburgerMenu";
 import { SearchBar } from "./SearchBar";
 
@@ -19,7 +20,10 @@ export const TopBar = () => {
       backgroundColor="background"
     >
       <Flex direction="row" justifyContent="space-between">
-        <Box minW="300px">Logo</Box>
+        <Box minW="300px">
+          {/* TODO: <Image objectFit="cover" src={logo} alt="TikTok" /> */}
+          <Image objectFit="cover" src={reactImg} alt="Dan Abramov" />
+        </Box>
         <SearchBar onSearch={() => {}} />
         <Stack direction="row">
           <Button variant="outline">Upload</Button>

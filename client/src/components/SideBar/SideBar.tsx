@@ -25,7 +25,6 @@ export const SideBar = () => {
       <Stack spacing={6} divider={<StackDivider borderColor="gray.200" />}>
         <Stack spacing={4}>
           {links.map(({ href, label, icon: Icon }) => {
-            console.log(href);
             return (
               <Link
                 key={label}
