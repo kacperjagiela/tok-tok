@@ -8,6 +8,7 @@ export const TopBar = () => {
   return (
     <Box
       position="sticky"
+      zIndex={1}
       top={0}
       w="100%"
       py={2}
@@ -21,8 +22,10 @@ export const TopBar = () => {
         <Box minW="300px">Logo</Box>
         <SearchBar onSearch={() => {}} />
         <Stack direction="row">
-          <Button>Upload</Button>
-          <Button>Log In</Button>
+          <Button variant="outline">Upload</Button>
+          <Button variant="solid" colorScheme="red">
+            Log in
+          </Button>
           <HamburguerMenu />
         </Stack>
       </Flex>

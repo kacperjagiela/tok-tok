@@ -13,10 +13,9 @@ export const Main = ({ feedType }: Props) => {
   return (
     <Box h="100vh">
       <TopBar />
-      <Flex minH="100vh" pt={4} justifyContent="space-between">
+      <Flex minH="100vh" pt={4}>
         <SideBar />
         <Feed feedType={feedType ?? FeedType.Home} />
-        <Box>Feed type: {feedType}</Box>
       </Flex>
     </Box>
   );
