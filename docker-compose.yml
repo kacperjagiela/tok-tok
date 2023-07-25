@@ -1,0 +1,25 @@
+version: "3.9" # Use the appropriate version of Docker Compose
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: my-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: admin
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgresql_volume:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer:latest
+    container_name: my-adminer
+    restart: always
+    ports:
+      - "8080:8080"
+
+volumes:
+  pgdata:
