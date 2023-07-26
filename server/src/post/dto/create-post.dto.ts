@@ -1,4 +1,4 @@
-export interface CreatePostDto {
+export class CreatePostDto {
   title: string;
   videoSrc: string;
   authorId: number;

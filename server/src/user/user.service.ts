@@ -1,17 +1,22 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
 import { Prisma, User } from "@prisma/client";
+import * as bcrypt from "bcryptjs";
 
 import { PrismaService } from "../prisma/prisma.service";
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService, private jwtService: JwtService) {}
 
   async user(
     userWhereUniqueInput: Prisma.UserWhereUniqueInput
   ): Promise<User | null> {
-    return this.prisma.user.findUnique({
-      where: userWhereUniqueInput,
+    console.log(userWhereUniqueInput);
+    return this.prisma.user.findFirst({
+      where: {
+        ...userWhereUniqueInput,
+      },
     });
   }
 
@@ -36,9 +41,33 @@ export class UserService {
   }
 
   async createUser(data: Prisma.UserCreateInput): Promise<User> {
+    // TODO: send validation email
+
+    const hashedPassword = await bcrypt.hash(data.password, 10);
+
     return this.prisma.user.create({
-      data,
+      data: {
+        ...data,
+        password: hashedPassword,
+      },
     });
+  }
+
+  // TODO: add refresh token
+
+  async signIn(username: string, pass: string): Promise<any> {
+    const user = await this.user({ username });
+
+    const isPasswordMatching = await bcrypt.compare(pass, user?.password);
+
+    if (!isPasswordMatching) {
+      throw new UnauthorizedException();
+    }
+    const payload = { sub: user.id, username: user.username };
+
+    return {
+      access_token: await this.jwtService.signAsync(payload),
+    };
   }
 
   async updateUser(params: {
