@@ -11,6 +11,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { App } from "./App";
 import { FeedType } from "./components/Feed";
 import { Main } from "./pages";
+import { UserProvider } from "./providers/UserProvider";
 
 const config: ThemeConfig = {
   initialColorMode: "light",
@@ -42,7 +43,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <ColorModeScript initialColorMode={theme.config.initialColorMode} />
     <React.StrictMode>
       <ChakraProvider theme={theme}>
-        <App router={router} />
+        <UserProvider>
+          <App router={router} />
+        </UserProvider>
       </ChakraProvider>
     </React.StrictMode>
   </>
