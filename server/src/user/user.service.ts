@@ -3,7 +3,6 @@ import { JwtService } from "@nestjs/jwt";
 import { Prisma, User } from "@prisma/client";
 import * as bcrypt from "bcryptjs";
 
-import { prismaExclude } from "../helpers/prismaExclude";
 import { PrismaService } from "../prisma/prisma.service";
 
 @Injectable()
@@ -19,6 +18,12 @@ export class UserService {
         ...userWhereUniqueInput,
       },
     });
+  }
+
+  async getCurrentUser(access_token: string): Promise<User | null> {
+    const { sub } = await this.jwtService.verifyAsync(access_token);
+
+    return this.user({ id: sub });
   }
 
   async users(params: {
@@ -57,7 +62,10 @@ export class UserService {
   // TODO: add refresh token
   // TODO: add check for email confirmation
 
-  async signIn(username: string, pass: string): Promise<any> {
+  async signIn(
+    username: string,
+    pass: string
+  ): Promise<{ access_token: string; user: User }> {
     const user = await this.user({ username });
 
     const isPasswordMatching = await bcrypt.compare(pass, user?.password);
@@ -69,7 +77,7 @@ export class UserService {
 
     return {
       access_token: await this.jwtService.signAsync(payload),
-      user: prismaExclude(user, "password"),
+      user,
     };
   }
 

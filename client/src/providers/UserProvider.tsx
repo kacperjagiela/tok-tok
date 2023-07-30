@@ -3,7 +3,6 @@ import {
   Dispatch,
   FC,
   ReactNode,
-  useEffect,
   useMemo,
   useReducer,
 } from "react";
@@ -28,12 +27,8 @@ interface Props {
 
 export const UserProvider: FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(UserProviderReducer, {
-    access_token: null,
     user: null,
   });
-
-  // TODO: Add logic to check if user is logged in
-  useEffect(() => {}, []);
 
   return (
     <UserContext.Provider value={useMemo(() => ({ state, dispatch }), [state])}>

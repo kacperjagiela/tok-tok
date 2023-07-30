@@ -11,6 +11,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { App } from "./App";
 import { FeedType } from "./components/Feed";
 import { Main } from "./pages";
+import { SingleProfile } from "./pages/profile/SingleProfile";
 import { UserProvider } from "./providers/UserProvider";
 
 const config: ThemeConfig = {
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
   { path: "/", element: <Main /> },
   { path: "/following", element: <Main feedType={FeedType.Following} /> },
   { path: "/mentions", element: <Main feedType={FeedType.Mentions} /> },
+  { path: "/profile/:username", element: <SingleProfile /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

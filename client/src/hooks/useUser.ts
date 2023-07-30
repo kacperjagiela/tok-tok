@@ -1,15 +1,15 @@
-import { useContext } from "react";
+import { useCallback, useContext, useMemo } from "react";
 
+import { ApiClient } from "../clients/ApiClient";
 import { ActionTypes } from "../providers/reducers/UserProviderReducer";
 import { UserContext } from "../providers/UserProvider";
 import { Nullable } from "../types/Nullable";
 import { User } from "../types/User";
 
 interface UseUser {
-  access_token: Nullable<string>;
-  setAccessToken: (accessToken: string) => void;
   user: Nullable<User>;
   setUser: (user: User) => void;
+  apiClient: ApiClient;
 }
 
 export const useUser = (): UseUser => {
@@ -21,28 +21,30 @@ export const useUser = (): UseUser => {
 
   const { state, dispatch } = ctx;
 
-  const setAccessToken = (accessToken: string) => {
-    dispatch({
-      type: ActionTypes.SetAccessToken,
-      payload: {
-        accessToken,
-      },
-    });
-  };
+  const setUser = useCallback(
+    (user: User) => {
+      dispatch({
+        type: ActionTypes.SetUser,
+        payload: {
+          user,
+        },
+      });
+    },
+    [dispatch]
+  );
 
-  const setUser = (user: User) => {
-    dispatch({
-      type: ActionTypes.SetUser,
-      payload: {
-        user,
-      },
-    });
-  };
+  const apiClient = useMemo(() => {
+    const client = new ApiClient();
+    client.setToken();
+    return client;
+  }, []);
 
-  return {
-    access_token: state.access_token,
-    setAccessToken,
-    user: state.user,
-    setUser,
-  };
+  return useMemo(
+    () => ({
+      user: state.user,
+      setUser,
+      apiClient,
+    }),
+    [apiClient, setUser, state.user]
+  );
 };
