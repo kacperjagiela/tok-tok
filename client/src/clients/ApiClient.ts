@@ -14,15 +14,12 @@ export class ApiClient {
 
   public setToken = () => {
     this.instance.interceptors.request.use((config) => {
-      console.log(document.cookie);
       if (!document.cookie || document.cookie === "") return config;
 
       const accessToken = document.cookie
         .split("; ")
         .find((row) => row.startsWith("access_token"))
         ?.split("=")[1];
-
-      console.log("ApiClient:", accessToken);
 
       if (accessToken) {
         config.headers.Authorization = `Bearer ${accessToken}`;

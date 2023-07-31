@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-} from "@nestjs/common";
+import { Body, Controller, Post } from "@nestjs/common";
 
 import { CreatePostDto } from "./dto/create-post.dto";
 import { PostService } from "./post.service";
