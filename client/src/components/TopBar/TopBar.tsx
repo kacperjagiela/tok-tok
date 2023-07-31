@@ -1,11 +1,24 @@
 import { Box } from "@chakra-ui/layout";
 import { Button, Flex, Image, Stack } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 import reactImg from "../../assets/react.svg";
+import { useUser } from "../../hooks/useUser";
 import { HamburguerMenu } from "./HamburgerMenu";
 import { SearchBar } from "./SearchBar";
 
-export const TopBar = () => {
+interface Props {
+  onLoginOpen: () => void;
+}
+
+export const TopBar = ({ onLoginOpen }: Props) => {
+  const { user } = useUser();
+  const navigate = useNavigate();
+
+  const goToProfile = () => {
+    navigate(`/profile/${user?.username}`);
+  };
+
   return (
     <Box
       position="sticky"
@@ -27,9 +40,15 @@ export const TopBar = () => {
         <SearchBar onSearch={() => {}} />
         <Stack direction="row">
           <Button variant="outline">Upload</Button>
-          <Button variant="solid" colorScheme="red">
-            Log in
-          </Button>
+          {user ? (
+            <Button variant="link" colorScheme="red" onClick={goToProfile}>
+              {user.username}
+            </Button>
+          ) : (
+            <Button variant="solid" colorScheme="red" onClick={onLoginOpen}>
+              Log in
+            </Button>
+          )}
           <HamburguerMenu />
         </Stack>
       </Flex>

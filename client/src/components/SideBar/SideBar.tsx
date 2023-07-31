@@ -1,24 +1,31 @@
 import { AtSignIcon, StarIcon, ViewIcon } from "@chakra-ui/icons";
 import { Box, Button, Link, Stack, StackDivider, Text } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
-export const SideBar = () => {
-  const links = [
-    {
-      href: "/",
-      label: "For You",
-      icon: StarIcon,
-    },
-    {
-      href: "/following",
-      label: "Following",
-      icon: ViewIcon,
-    },
-    {
-      href: "/mentions",
-      label: "Mentions",
-      icon: AtSignIcon,
-    },
-  ];
+const links = [
+  {
+    href: "/",
+    label: "For You",
+    icon: StarIcon,
+  },
+  {
+    href: "/following",
+    label: "Following",
+    icon: ViewIcon,
+  },
+  {
+    href: "/mentions",
+    label: "Mentions",
+    icon: AtSignIcon,
+  },
+];
+
+interface Props {
+  onLoginOpen: () => void;
+}
+
+export const SideBar = ({ onLoginOpen }: Props) => {
+  const navigate = useNavigate();
 
   return (
     <Box w={240} position="sticky" top="73px" px={3} h="calc(100vh - 57px)">
@@ -32,7 +39,7 @@ export const SideBar = () => {
                 fontWeight={600}
                 display="inline-flex"
                 alignItems="center"
-                href={href}
+                onClick={() => navigate(href)}
                 fontSize="xl"
                 _hover={{
                   bgColor: "gray.100",
@@ -54,7 +61,12 @@ export const SideBar = () => {
           >
             Log in to follow creators, like videos, and view comments.
           </Text>
-          <Button w="100%" colorScheme="red" variant="outline">
+          <Button
+            w="100%"
+            colorScheme="red"
+            variant="outline"
+            onClick={onLoginOpen}
+          >
             Log in
           </Button>
         </Box>
