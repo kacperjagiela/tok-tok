@@ -9,12 +9,29 @@ import {
   ModalProps,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
+import { RoutesEnum } from "../../routes";
+import { Nullable } from "../../types/Nullable";
 import { LoginForm } from "./LoginForm";
 import { RegisterForm } from "./RegisterForm";
 
-export const LoginModal = (props: Omit<ModalProps, "children">) => {
+interface Props extends Omit<ModalProps, "children"> {
+  navigateOnLogin: Nullable<RoutesEnum>;
+}
+
+export const LoginModal = (props: Props) => {
   const [wantToRegister, setWantToRegister] = useState(false);
+
+  const navigate = useNavigate();
+
+  const onFinish = () => {
+    props.onClose();
+
+    if (props.navigateOnLogin) {
+      navigate(props.navigateOnLogin);
+    }
+  };
 
   return (
     <Modal {...props}>
@@ -23,9 +40,9 @@ export const LoginModal = (props: Omit<ModalProps, "children">) => {
         <ModalCloseButton />
         <ModalBody>
           {wantToRegister ? (
-            <RegisterForm onFinish={props.onClose} />
+            <RegisterForm onFinish={onFinish} />
           ) : (
-            <LoginForm onFinish={props.onClose} />
+            <LoginForm onFinish={onFinish} />
           )}
         </ModalBody>
 

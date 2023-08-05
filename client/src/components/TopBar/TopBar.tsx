@@ -4,11 +4,12 @@ import { useNavigate } from "react-router-dom";
 
 import reactImg from "../../assets/react.svg";
 import { useUser } from "../../hooks/useUser";
+import { RoutesEnum } from "../../routes";
 import { HamburguerMenu } from "./HamburgerMenu";
 import { SearchBar } from "./SearchBar";
 
 interface Props {
-  onLoginOpen: () => void;
+  onLoginOpen: (navigateOnLogin?: RoutesEnum) => void;
 }
 
 export const TopBar = ({ onLoginOpen }: Props) => {
@@ -17,6 +18,10 @@ export const TopBar = ({ onLoginOpen }: Props) => {
 
   const goToProfile = () => {
     navigate(`/profile/${user?.username}`);
+  };
+
+  const goToUpload = () => {
+    navigate("/upload");
   };
 
   return (
@@ -35,17 +40,26 @@ export const TopBar = ({ onLoginOpen }: Props) => {
       <Flex direction="row" justifyContent="space-between">
         <Box minW="300px">
           {/* TODO: <Image objectFit="cover" src={logo} alt="TikTok" /> */}
-          <Image objectFit="cover" src={reactImg} alt="Dan Abramov" />
+          <Image objectFit="cover" src={reactImg} alt="Logo" />
         </Box>
         <SearchBar onSearch={() => {}} />
         <Stack direction="row">
-          <Button variant="outline">Upload</Button>
+          <Button
+            variant="outline"
+            onClick={user ? goToUpload : () => onLoginOpen(RoutesEnum.Upload)}
+          >
+            Upload
+          </Button>
           {user ? (
             <Button variant="link" colorScheme="red" onClick={goToProfile}>
               {user.username}
             </Button>
           ) : (
-            <Button variant="solid" colorScheme="red" onClick={onLoginOpen}>
+            <Button
+              variant="solid"
+              colorScheme="red"
+              onClick={() => onLoginOpen()}
+            >
               Log in
             </Button>
           )}
