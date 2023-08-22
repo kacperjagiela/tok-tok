@@ -13,16 +13,21 @@ export const App = ({ router }: Props) => {
 
   // Log user in if token is present
   useEffect(() => {
-    apiClient.getCurrentUser().then((data) => {
-      if (data) {
-        setUser(data.user);
-        apiClient.setToken();
+    apiClient
+      .getCurrentUser()
+      .then((data) => {
+        if (data) {
+          setUser(data.user);
+          apiClient.setToken();
 
-        apiClient.guardTest().then((data) => {
-          console.log("guardTest", data);
-        });
-      }
-    });
+          apiClient.guardTest().then((data) => {
+            console.log("guardTest", data);
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [apiClient, setUser]);
 
   return (

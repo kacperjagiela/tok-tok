@@ -16,14 +16,21 @@ export class ApiClient {
     this.instance.interceptors.request.use((config) => {
       if (!document.cookie || document.cookie === "") return config;
 
-      const accessToken = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("access_token"))
-        ?.split("=")[1];
+      console.log("document.cookie", document.cookie);
 
-      if (accessToken) {
-        config.headers.Authorization = `Bearer ${accessToken}`;
+      try {
+        const accessToken = document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("access_token"))
+          ?.split("=")[1];
+
+        if (accessToken) {
+          config.headers.Authorization = `Bearer ${accessToken}`;
+        }
+      } catch (error) {
+        console.error(error);
       }
+
       return config;
     });
   };
