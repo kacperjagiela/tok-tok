@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/layout";
 import { Button, Flex, Image, Stack } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import reactImg from "../../assets/react.svg";
 import { useUser } from "../../hooks/useUser";
@@ -40,7 +40,9 @@ export const TopBar = ({ onLoginOpen }: Props) => {
       <Flex direction="row" justifyContent="space-between">
         <Box minW="300px">
           {/* TODO: <Image objectFit="cover" src={logo} alt="TikTok" /> */}
-          <Image objectFit="cover" src={reactImg} alt="Logo" />
+          <Link to="/">
+            <Image objectFit="cover" src={reactImg} alt="Logo" />
+          </Link>
         </Box>
         <SearchBar onSearch={() => {}} />
         <Stack direction="row">

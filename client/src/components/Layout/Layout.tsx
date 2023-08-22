@@ -39,7 +39,7 @@ export const Layout = ({ children, hideSideBar }: Props) => {
         />
       ) : null}
       <TopBar onLoginOpen={onLoginOpen} />
-      <Flex minH="100vh" pt={4}>
+      <Flex minH="calc(100vh - 60px)" pt={4}>
         {hideSideBar ? null : <SideBar onLoginOpen={onOpen} />}
         {children}
       </Flex>

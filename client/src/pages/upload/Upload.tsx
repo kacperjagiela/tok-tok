@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Layout } from "../../components/Layout/Layout";
 import { useUser } from "../../hooks/useUser";
 import { RoutesEnum } from "../../routes";
+import { Card, CardBody, Container, Text } from "@chakra-ui/react";
 
 export const Upload = () => {
   const [currentFile, setCurrentFile] = useState<File | null>(null);
@@ -30,14 +31,20 @@ export const Upload = () => {
       {currentFile ? (
         <>{currentFile.name}</>
       ) : (
-        <div {...getRootProps()}>
-          <input {...getInputProps()} />
-          {isDragActive ? (
-            <p>Drop the files here ...</p>
-          ) : (
-            <p>Drag 'n' drop some files here, or click to select files</p>
-          )}
-        </div>
+        <Container>
+          <Card>
+            <CardBody {...getRootProps()} cursor="pointer">
+              <input {...getInputProps()} />
+              {isDragActive ? (
+                <Text textAlign="center">Drop the files here ...</Text>
+              ) : (
+                <Text textAlign="center">
+                  Select video to upload Or drag and drop a file
+                </Text>
+              )}
+            </CardBody>
+          </Card>
+        </Container>
       )}
     </Layout>
   );
